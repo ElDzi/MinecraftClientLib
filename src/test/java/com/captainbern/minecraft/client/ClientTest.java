@@ -1,5 +1,6 @@
 package com.captainbern.minecraft.client;
 
+import com.captainbern.minecraft.client.auth.AuthResult;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -16,8 +17,9 @@ public class ClientTest {
     public void testMinecraftClient() {
         Client client = new MinecraftClient(USERNAME);
 
-        client.authenticate(PASSWORD);
+        AuthResult result = client.authenticate(PASSWORD);
         assertTrue("Not logged in correctly!", client.getAuthenticator().getUserAuthentication().isLoggedIn());
+        assertEquals("Client#authenticate() didn't return the expected result!", result, AuthResult.SUCCESS); // Really necessary?
 
         client.connect(SERVER_ADDRESS, SERVER_PORT);
         // TODO: test if connected properly
