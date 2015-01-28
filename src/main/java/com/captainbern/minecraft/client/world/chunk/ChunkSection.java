@@ -1,6 +1,7 @@
 package com.captainbern.minecraft.client.world.chunk;
 
 import com.captainbern.minecraft.client.util.NibbleArray;
+import com.captainbern.minecraft.game.BlockVector;
 
 public class ChunkSection {
 
@@ -63,5 +64,13 @@ public class ChunkSection {
 
     public static int toIndex(int x, int y, int z) {
         return (((y & 0x0f) << 8) | (z << 4) | (x));
+    }
+
+    public static BlockVector indexToLoc(int index) {
+        int x = index >> 12 & 0xF;
+        int y = index >> 8 & 0xF;
+        int z = index & 0xFF;
+
+        return new BlockVector(x, y, z);
     }
 }

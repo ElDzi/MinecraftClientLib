@@ -7,22 +7,6 @@ import com.captainbern.minecraft.game.BlockVector;
 
 public class ChunkImpl implements Chunk {
 
-    public static int locToIndex(int x, int y, int z) {
-        return ((x << 12) | (z << 8) | (y));
-    }
-
-    public static BlockVector indexToLoc(int index) {
-        int x = index >> 12 & 0xF;
-        int y = index >> 8 & 0xF;
-        int z = index & 0xFF;
-
-        return new BlockVector(x, y, z);
-    }
-
-    /**
-     * Actual Chunk code
-     */
-
     private final World world;
 
     private final int x;
