@@ -2,6 +2,13 @@ package com.captainbern.minecraft.client.world;
 
 public class Location {
 
+    /**
+     * TODO:
+     *  - Add getBlock() method
+     *  - Add getBlockX(), getBlockY() and getBlockZ() methods
+     *  - Some math methods
+     */
+
     private double x;
     private double y;
     private double z;
@@ -12,14 +19,16 @@ public class Location {
     public World world;
 
     public Location(World world, int x, int y, int z) {
-        this(world, ((double) x), ((double) y), ((double) z));
+        this(world, ((double) x), ((double) y), ((double) z), 0, 0);
     }
 
-    public Location(World world, double x, double y, double z) {
+    public Location(World world, double x, double y, double z, float pitch, float yaw) {
         this.world = world;
         this.x = x;
         this.y = y;
         this.z = z;
+        this.pitch = pitch;
+        this.yaw = yaw;
     }
 
     public double getX() {

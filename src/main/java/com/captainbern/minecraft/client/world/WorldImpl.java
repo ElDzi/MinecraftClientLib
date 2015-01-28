@@ -7,7 +7,7 @@ import com.captainbern.minecraft.game.Difficulty;
 import com.captainbern.minecraft.net.packet.play.server.PacketChunkData;
 import com.captainbern.minecraft.net.packet.play.server.PacketMapChunkBulk;
 
-import java.util.List;
+import java.util.Collection;
 
 public class WorldImpl implements World {
 
@@ -50,8 +50,8 @@ public class WorldImpl implements World {
     }
 
     @Override
-    public List<Chunk> getChunks() {
-        return null;
+    public Collection<Chunk> getChunks() {
+        return this.chunkManager.getChunks();
     }
 
     @Override

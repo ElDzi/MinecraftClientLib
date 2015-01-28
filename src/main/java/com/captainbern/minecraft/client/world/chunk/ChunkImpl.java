@@ -1,17 +1,11 @@
 package com.captainbern.minecraft.client.world.chunk;
 
+import com.captainbern.minecraft.client.world.BiomeGrid;
 import com.captainbern.minecraft.client.world.World;
+import com.captainbern.minecraft.client.world.block.BlockImpl;
 import com.captainbern.minecraft.game.BlockVector;
 
 public class ChunkImpl implements Chunk {
-
-    public static final int WIDTH = 16;
-    public static final int HEIGHT = 16;
-    public static final int DEPTH = 256;
-
-    private static final int SECTION_DEPTH = 16;
-
-    public static final int SIZE = WIDTH * HEIGHT * SECTION_DEPTH;
 
     public static int locToIndex(int x, int y, int z) {
         return ((x << 12) | (z << 8) | (y));
@@ -39,7 +33,7 @@ public class ChunkImpl implements Chunk {
 
     private byte[] heightMap;
 
-    private byte[] biomes;
+    private BiomeGrid biomeGrid;
 
     public ChunkImpl(World world, int x, int z) {
         this.world = world;
@@ -62,13 +56,35 @@ public class ChunkImpl implements Chunk {
         return this.z;
     }
 
-    public ChunkSection SectionAt(int y) {
+    @Override
+    public BlockImpl getBlock(int x, int y, int z) {
+        return new BlockImpl(this, (this.x << 4) | (x & 0xf), y & 0xff, (this.z << 4) | (z & 0xf));
+    }
+
+    public ChunkSection getSectionAt(int y) {
         return this.chunkSections[y << 4];
+    }
+
+    public int getTypeIdAt(int x, int y, int z) {
+        ChunkSection section = this.getSectionAt(y);
+        if (section != null)
+            return section.getType(x, y, z) ;
+        return 0;
+    }
+
+    public void setTypeIdAt(int x, int y, int z, int typeId) {
+        ChunkSection section = getSectionAt(y);
+
+        if (section != null) {
+            section.setType(x, y, z, typeId);
+        } else {
+            // TODO: throw exception
+        }
     }
 
     public void unload() {
         this.chunkSections = null;
-        this.biomes = null;
+        this.biomeGrid = null;
         this.heightMap = null;
     }
 }
